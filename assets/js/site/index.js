@@ -71,8 +71,8 @@ $(document).ready(()=>{
             let rows = `
                     <tr>
                         <th>${careerClass[num][i]}</th>
-                        <th><input type="checkbox" value="true" name="" id="selectClass${[i]}"></th>
-                        <th id="thId${i}">
+                        <th id="thCId${i}"><input type="checkbox" value="true" name="" id="selectClass${[i]}"></th>
+                        <th id="thRId${i}">
                             <label>Monday - 9:00am/11:50am <input type="radio" value="${radioValues[0]}" name="classR${[i]}"}"></label> | 
                             <label>Thursday - 12:00pm/5:50pm <input type="radio" value="${radioValues[1]}" name="classR${[i]}"></label> | 
                             <label>Friday - 6:00pm/10:50pm <input type="radio" value="${radioValues[2]}" name="classR${[i]}"></label>
@@ -86,7 +86,7 @@ $(document).ready(()=>{
     function insertFinalData(){
         let arrays = []
         for(let i=0; i<careerClass[num].length;i++){
-            r = $(`#thId${i} input[type='radio']:checked`).val();
+            r = $(`#thRId${i} input[type='radio']:checked`).val();
             if( r == radioValues[0] || r == radioValues[1] || r == radioValues[2] ){
                 arrays.push(r) 
             }
