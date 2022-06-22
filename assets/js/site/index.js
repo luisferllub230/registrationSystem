@@ -1,8 +1,15 @@
 $(document).ready(()=>{
 
     //global variables
-    let named ='',province ='', city = '', sector ='', street ='', career ='',varNex = 1;
-    
+    let named ='',province ='', city = '', sector ='', street ='', career ='',varNex = 1,num=0,r = '';
+
+    //objects and arrays
+    let careerClass = {0: ["Programing 1","Programing 2","Web programing","User centered design","Programing 3"],1: ["Ethical hacking 1","Ethical hacking 2","Ethical 1","Operation system 1","Operation system 2"],2: ["Networks introductions","Operation system 1","Operation system 2","Electronic","Computing fundamentals"]}
+
+    let radioValues = ["Monday","Thursday","Friday"]
+
+    let finalConfirmationOject = {0:[],1:[],2:[]}
+
     //hide
     $("#container-selectClass").hide();
     $("#container-confirmation").hide();
@@ -10,7 +17,7 @@ $(document).ready(()=>{
     //events
     $("#next").on("click",()=>{next();})
     $("#clear").on("click",()=>{clean();})
-    $("#back").on("click", ()=>{
+    $("#back1").on("click", ()=>{
         $("#container-selectClass").hide();
         $("#container-index").show();
         varNex = 1;
@@ -46,13 +53,6 @@ $(document).ready(()=>{
     }
 
     function insertTablaSelectClass(){
-        let num=0;
-        const careerClass = {
-            0: ["Programing 1","Programing 2","Web programing","User centered design","Programing 3"],
-            1: ["Ethical hacking 1","Ethical hacking 2","Ethical 1","Operation system 1","Operation system 2"],
-            2: ["Networks introductions","Operation system 1","Operation system 2","Electronic","Computing fundamentals"]
-        }
-
         switch (career) {
             case "Software Development":
                 num = 0;
@@ -71,11 +71,11 @@ $(document).ready(()=>{
             let rows = `
                     <tr>
                         <th>${careerClass[num][i]}</th>
-                        <th><input type="checkbox" name="" id="selectClass${[i]}"></th>
-                        <th>
-                            <label>Monday - 9:00am/11:50am <input type="radio" name="classR${[i]}" class="class${[i]}"></label> | 
-                            <label>Thursday - 12:00pm/5:50pm <input type="radio" name="classR${[i]}" class="class${[i]}"></label> | 
-                            <label>Friday - 6:00pm/10:50pm <input type="radio" name="classR${[i]}" class="class${[i]}"></label>
+                        <th><input type="checkbox" value="true" name="" id="selectClass${[i]}"></th>
+                        <th id="thId${i}">
+                            <label>Monday - 9:00am/11:50am <input type="radio" value="${radioValues[0]}" name="classR${[i]}"}"></label> | 
+                            <label>Thursday - 12:00pm/5:50pm <input type="radio" value="${radioValues[1]}" name="classR${[i]}"></label> | 
+                            <label>Friday - 6:00pm/10:50pm <input type="radio" value="${radioValues[2]}" name="classR${[i]}"></label>
                         </th>
                     </tr>
             `
@@ -83,8 +83,22 @@ $(document).ready(()=>{
         }
     }
 
+    function insertFinalData(){
+        let arrays = []
+        for(let i=0; i<careerClass[num].length;i++){
+            r = $(`#thId${i} input[type='radio']:checked`).val();
+            if( r == radioValues[0] || r == radioValues[1] || r == radioValues[2] ){
+                arrays.push(r) 
+            }
+        }
+        finalConfirmationOject[num] = arrays
+        console.log(finalConfirmationOject[num])
+    }
+
     function next(){
         if(varNex===3){
+            insertFinalData();
+            
         }
         if(varNex===2){
             varNex = 3
