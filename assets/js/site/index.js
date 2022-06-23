@@ -1,20 +1,13 @@
 $(document).ready(()=>{
-
     //global variables
-    let named ='',province ='', city = '', sector ='', street ='', career ='',varNex = 1,num=0,r = '';
+    let named ='',province ='', city = '', sector ='', street ='', career ='',varNex = 1,num=0,r = '',c;
 
-    //objects and arrays
+    //============================================objects and arrays
     let careerClass = {0: ["Programing 1","Programing 2","Web programing","User centered design","Programing 3"],1: ["Ethical hacking 1","Ethical hacking 2","Ethical 1","Operation system 1","Operation system 2"],2: ["Networks introductions","Operation system 1","Operation system 2","Electronic","Computing fundamentals"]}
+    let radioValues = ["m","t","f"]
+    let finalConfirmationCareer = {0:[],1:[],2:[]}
 
-    let radioValues = ["Monday","Thursday","Friday"]
-
-    let finalConfirmationOject = {0:[],1:[],2:[]}
-
-    //hide
-    $("#container-selectClass").hide();
-    $("#container-confirmation").hide();
-
-    //events
+    //============================================events
     $("#next").on("click",()=>{next();})
     $("#clear").on("click",()=>{clean();})
     $("#back1").on("click", ()=>{
@@ -22,8 +15,11 @@ $(document).ready(()=>{
         $("#container-index").show();
         varNex = 1;
     })
-
-    //function 
+    //hide
+    $("#container-selectClass").hide();
+    $("#container-confirmation").hide();
+    
+    //============================================function 
     function validate(){
         let validate = true
         named = $("#named").val();province = $("#province").val();city = $("#city").val();sector= $("#sector").val();street = $("#street").val();career = $("#career").val();
@@ -71,7 +67,6 @@ $(document).ready(()=>{
             let rows = `
                     <tr>
                         <th>${careerClass[num][i]}</th>
-                        <th id="thCId${i}"><input type="checkbox" value="true" name="" id="selectClass${[i]}"></th>
                         <th id="thRId${i}">
                             <label>Monday - 9:00am/11:50am <input type="radio" value="${radioValues[0]}" name="classR${[i]}"}"></label> | 
                             <label>Thursday - 12:00pm/5:50pm <input type="radio" value="${radioValues[1]}" name="classR${[i]}"></label> | 
@@ -84,21 +79,66 @@ $(document).ready(()=>{
     }
 
     function insertFinalData(){
-        let arrays = []
+
         for(let i=0; i<careerClass[num].length;i++){
+
             r = $(`#thRId${i} input[type='radio']:checked`).val();
-            if( r == radioValues[0] || r == radioValues[1] || r == radioValues[2] ){
-                arrays.push(r) 
+
+            if( r == radioValues[0]){
+                finalConfirmationCareer[num][i] = (`${r}, ${careerClass[num][i]}`);
+            }if(r == radioValues[1]){
+                finalConfirmationCareer[num][i] = (`${r}, ${careerClass[num][i]}`);
+            }if(r == radioValues[2]){
+                finalConfirmationCareer[num][i] = (`${r}, ${careerClass[num][i]}`);
             }
         }
-        finalConfirmationOject[num] = arrays
-        console.log(finalConfirmationOject[num])
+
+        let rows1 = `<tr><th>Name:</th><th>${named}</th></tr><tr><th>Province:</th><th>${province}</th></tr><tr><th>City:</th><th>${city}</th></tr><tr><th>Sector:</th><th>${sector}</th>
+            </tr><tr><th>Street:</th><th>${street}</th></tr><tr><th>Career:</th><th>${career}</th></tr>`
+        $(`#confTbody`).append(rows1);
+    }
+
+    function insertLasTable(){
+        let array = finalConfirmationCareer[num].slice()
+        
+        for(let i=0; i<array.length ;i++){
+
+            let m= '', t='', f='';
+
+            array[i] == null ? array[i] = "" : array[i]
+
+            let string = array[i].toString();
+
+            if(string.indexOf("m,") === 0){
+                m = string;
+                m = m.replace("m,","");
+            }if(array[i].indexOf("t,") === 0){
+                t = string;
+                t = t.replace("t,","");
+            }if(array[i].indexOf("f,") === 0){
+                f = string;
+                f = f.replace("f,","");
+            }
+            let rows2 = `
+                <tr>
+                    <th>${m}</th>
+                    <th></th>
+                    <th></th>
+                    <th>${t}</th>
+                    <th>${f}</th>
+                </tr>
+            `
+            $("#confTbody2").append(rows2)
+        }
     }
 
     function next(){
         if(varNex===3){
+            varNex = 4
             insertFinalData();
-            
+            $("#container-selectClass").hide();
+            $("#container-confirmation").show();
+            insertLasTable();
         }
         if(varNex===2){
             varNex = 3
