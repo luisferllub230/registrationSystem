@@ -11,13 +11,28 @@ $(document).ready(()=>{
     $("#next").on("click",()=>{next();})
     $("#clear").on("click",()=>{clean();})
     $("#back1").on("click", ()=>{
-        $("#container-selectClass").hide();
+        $("#container-selectClass").hide(); //arreglar el ultimo btn
         $("#container-index").show();
+        $("#next").show();
+        $("#clear").show();
+        $("#indexA1").show();
         varNex = 1;
+    })
+    $("#back2").on("click", ()=>{
+        $("#container-confirmation").hide();
+        $("#container-selectClass").show();
+        $("#next").hide();
+        varNex = 3;
+    })
+    $("#indexA1").on("click",()=>{
+        $("#container-index").hide();
+        $("#container-selectClass").show();
+        varNex = 3;
     })
     //hide
     $("#container-selectClass").hide();
     $("#container-confirmation").hide();
+    $("#indexA1").hide();
     
     //============================================function 
     function validate(){
@@ -40,14 +55,11 @@ $(document).ready(()=>{
     } 
 
     function clean(){
-        const listClean = ["#named","#province","#city","#sector","#street","#career"]
-
-        for(i in listClean){
-            $(`${listClean[i]}`).val("").removeClass("border border-2 border-danger shadow").removeClass("border border-2 border-success");
-        }
+        location.reload();
         $(`${listClean[0]}`).focus();
     }
 
+    //============================================selectClass 
     function insertTablaSelectClass(){
         switch (career) {
             case "Software Development":
@@ -78,6 +90,7 @@ $(document).ready(()=>{
         }
     }
 
+    //============================================confirmation 
     function insertFinalData(){
 
         for(let i=0; i<careerClass[num].length;i++){
@@ -100,11 +113,11 @@ $(document).ready(()=>{
 
     function insertLasTable(){
         let array = finalConfirmationCareer[num].slice()
-        
+
         for(let i=0; i<array.length ;i++){
 
             let m= '', t='', f='';
-
+            
             array[i] == null ? array[i] = "" : array[i]
 
             let string = array[i].toString();
@@ -133,20 +146,26 @@ $(document).ready(()=>{
     }
 
     function next(){
+        if(varNex === 4){
+            alert("PROCESS FINISH :)")
+            location.reload();
+        }   
         if(varNex===3){
             varNex = 4
             insertFinalData();
             $("#container-selectClass").hide();
             $("#container-confirmation").show();
             insertLasTable();
+            $("#clear").hide();
         }
         if(varNex===2){
             varNex = 3
             $("#container-index").hide();
             $("#container-selectClass").show();
             insertTablaSelectClass();
+            $("#clear").hide();
         }
-        if(varNex === 1){
+        if(varNex === 1 || varNex > 100){
             if(validate()){
                 varNex = 2
                 next();
