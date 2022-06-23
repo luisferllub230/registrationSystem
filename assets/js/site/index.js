@@ -11,9 +11,8 @@ $(document).ready(()=>{
     $("#next").on("click",()=>{next();})
     $("#clear").on("click",()=>{clean();})
     $("#back1").on("click", ()=>{
-        $("#container-selectClass").hide(); //arreglar el ultimo btn
+        $("#container-selectClass").hide();
         $("#container-index").show();
-        $("#next").show();
         $("#clear").show();
         $("#indexA1").show();
         varNex = 1;
@@ -29,6 +28,10 @@ $(document).ready(()=>{
         $("#container-selectClass").show();
         varNex = 3;
     })
+    $('#container-selectClass').on("click","#configNex",()=>{
+        $("#container-selectClass").hide();
+        $("#container-confirmation").show();
+    });
     //hide
     $("#container-selectClass").hide();
     $("#container-confirmation").hide();
@@ -156,6 +159,7 @@ $(document).ready(()=>{
             $("#container-selectClass").hide();
             $("#container-confirmation").show();
             insertLasTable();
+            $("#p1").append(`<a href="#" id="configNex">personal date</a>`);
             $("#clear").hide();
         }
         if(varNex===2){
@@ -163,7 +167,6 @@ $(document).ready(()=>{
             $("#container-index").hide();
             $("#container-selectClass").show();
             insertTablaSelectClass();
-            $("#clear").hide();
         }
         if(varNex === 1 || varNex > 100){
             if(validate()){
