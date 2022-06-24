@@ -13,14 +13,11 @@ $(document).ready(()=>{
     $("#back1").on("click", ()=>{
         $("#container-selectClass").hide();
         $("#container-index").show();
-        $("#clear").show();
-        $("#indexA1").show();
         varNex = 1;
     })
     $("#back2").on("click", ()=>{
         $("#container-confirmation").hide();
         $("#container-selectClass").show();
-        $("#next").hide();
         varNex = 3;
     })
     $("#indexA1").on("click",()=>{
@@ -31,6 +28,7 @@ $(document).ready(()=>{
     $('#container-selectClass').on("click","#configNex",()=>{
         $("#container-selectClass").hide();
         $("#container-confirmation").show();
+        varNex = 3;
     });
     //hide
     $("#container-selectClass").hide();
@@ -64,6 +62,7 @@ $(document).ready(()=>{
 
     //============================================selectClass 
     function insertTablaSelectClass(){
+        let cont = false;
         switch (career) {
             case "Software Development":
                 num = 0;
@@ -77,10 +76,14 @@ $(document).ready(()=>{
             default:
                 break;
         }
-
+  
+        if(cont = true){
+           $("#tbodySC").empty();
+           cont = false;
+        }
         for(let i=0; i<careerClass[num].length;i++){
             let rows = `
-                    <tr>
+                    <tr id="trRemove">
                         <th>${careerClass[num][i]}</th>
                         <th id="thRId${i}">
                             <label>Monday - 9:00am/11:50am <input type="radio" value="${radioValues[0]}" name="classR${[i]}"}"></label> | 
@@ -91,10 +94,18 @@ $(document).ready(()=>{
             `
             $("#tbodySC").append(rows);
         }
+        cont=== false ? cont = true : cont=false;
     }
 
     //============================================confirmation 
     function insertFinalData(){
+
+        let cont = false;
+
+        if(cont = true){
+            $("#confTbody").empty();
+            cont = false;
+         }
 
         for(let i=0; i<careerClass[num].length;i++){
 
@@ -108,13 +119,20 @@ $(document).ready(()=>{
                 finalConfirmationCareer[num][i] = (`${r}, ${careerClass[num][i]}`);
             }
         }
-
         let rows1 = `<tr><th>Name:</th><th>${named}</th></tr><tr><th>Province:</th><th>${province}</th></tr><tr><th>City:</th><th>${city}</th></tr><tr><th>Sector:</th><th>${sector}</th>
             </tr><tr><th>Street:</th><th>${street}</th></tr><tr><th>Career:</th><th>${career}</th></tr>`
         $(`#confTbody`).append(rows1);
+
+        cont=== false ? cont = true : cont=false;
     }
 
     function insertLasTable(){
+        let cont = false;
+
+        if(cont = true){
+            $("#confTbody2").empty();
+            cont = false;
+        }
         let array = finalConfirmationCareer[num].slice()
 
         for(let i=0; i<array.length ;i++){
@@ -125,13 +143,13 @@ $(document).ready(()=>{
 
             let string = array[i].toString();
 
-            if(string.indexOf("m,") === 0){
+            if(string.indexOf("m,") >= 0){
                 m = string;
                 m = m.replace("m,","");
-            }if(array[i].indexOf("t,") === 0){
+            }if(array[i].indexOf("t,") >= 0){
                 t = string;
                 t = t.replace("t,","");
-            }if(array[i].indexOf("f,") === 0){
+            }if(array[i].indexOf("f,") >= 0){
                 f = string;
                 f = f.replace("f,","");
             }
@@ -146,6 +164,8 @@ $(document).ready(()=>{
             `
             $("#confTbody2").append(rows2)
         }
+
+        cont=== false ? cont = true : cont=false;
     }
 
     function next(){
@@ -159,8 +179,7 @@ $(document).ready(()=>{
             $("#container-selectClass").hide();
             $("#container-confirmation").show();
             insertLasTable();
-            $("#p1").append(`<a href="#" id="configNex">personal date</a>`);
-            $("#clear").hide();
+            $("#p1").append(`<a href="#" id="configNex">confirmation</a>`);
         }
         if(varNex===2){
             varNex = 3
