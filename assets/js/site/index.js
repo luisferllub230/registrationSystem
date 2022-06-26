@@ -139,7 +139,7 @@ $(document).ready(()=>{
 
             let m= '', t='', f='';
             
-            array[i] == null ? array[i] = "" : array[i]
+            array[i] == null ? array[i] = "" : array[i] //https://www.youtube.com/watch?v=LYF4FeJyccc&t=348s improve the code
 
             let string = array[i].toString();
 
